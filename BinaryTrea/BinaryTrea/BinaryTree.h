@@ -13,10 +13,10 @@ class BinaryTree
 
 	bool AddRight(int key, T newItem);
 	bool AddLeft(int key, T newItem);
-
+	bool Add(int key, T newItem);
 public:
 
-	static bool AddNewItem(int key, T newItem) ;
+	bool AddNewItem(int key, T newItem) ;
 
 	static BinaryTree<T>* GoRight(BinaryTree<T>* temp) ;
 	static BinaryTree<T>* GoLeft(BinaryTree<T>* temp) ;
@@ -32,16 +32,11 @@ template<typename T>
 bool BinaryTree<T>::AddNewItem(int key, T newItem)
 {
 	BinaryTree<T>* temp = nullptr;
-	//if (newItem._key >= this->_key)	GoRight();
-	//else GoLeft();
 	temp = (key >= this->_key) ? GoRight(this) : GoLeft(this);
 	if (temp == this)
-		if (key >= this->_key)
-			return BinaryTree::AddRight(key, newItem);
-		else
-			return BinaryTree::AddLeft(key, newItem);
+		this->Add(key, newItem);
 	else
-		return this->AddNewItem(key, newItem);
+		return temp->AddNewItem(key, newItem);
 }
 
 template<typename T>
@@ -54,6 +49,15 @@ template<typename T>
 inline bool BinaryTree<T>::AddLeft(int key, T newItem)
 {
 	return((this->left = new BinaryTree<T>(key, newItem)) != nullptr) ? true : false;
+}
+
+template<typename T>
+bool BinaryTree<T>::Add(int key, T newItem)
+{
+	if (key >= this->_key)
+		return BinaryTree::AddRight(key, newItem);
+	else
+		return BinaryTree::AddLeft(key, newItem);
 }
 
 template<typename T>

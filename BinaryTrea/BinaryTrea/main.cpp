@@ -9,5 +9,5 @@ void main() {
 	root->AddNewItem(1, 1);
 	root->AddNewItem(4, 1);
 	root->AddNewItem(11, 1);
-	system("pause");
+
 }
