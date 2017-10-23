@@ -16,7 +16,7 @@ class BinaryTree
 	bool Add(int key, T newItem);
 public:
 
-	void Delete();
+	void CleanTree();
 
 	bool AddNewItem(int key, T newItem) ;
 
@@ -26,19 +26,31 @@ public:
 	bool AddNewItem(int key, BinaryTree newItem);
 
 	BinaryTree(int key, T newItem = NULL);
-	~BinaryTree() {}
+	~BinaryTree();
 
 };
 
 template<typename T>
-inline void BinaryTree<T>::Delete()
+void BinaryTree<T>::CleanTree()
 {
-	if (this->left != nullptr) {
-
+	BinaryTree<T>* temp = this;
+	if (this->left != nullptr)
+	{
+		temp = this->left;
+		temp->CleanTree();
+		this->left=nullptr;
 	}
-	else {
-
+	if (this->right != nullptr)
+	{
+		temp = this->right; 
+		temp->CleanTree();
+		this->right = nullptr;
 	}
+}
+template<typename T>
+BinaryTree<T>::~BinaryTree()
+{
+	this->CleanTree();
 }
 
 template<typename T>
@@ -108,3 +120,5 @@ BinaryTree<T>::BinaryTree(int key, T newItem)
 	this->left = NULL;
 	this->right = NULL;
 }
+
+
