@@ -16,6 +16,8 @@ class BinaryTree
 	bool Add(int key, T newItem);
 public:
 
+	void Delete();
+
 	bool AddNewItem(int key, T newItem) ;
 
 	static BinaryTree<T>* GoRight(BinaryTree<T>* temp) ;
@@ -27,6 +29,17 @@ public:
 	~BinaryTree() {}
 
 };
+
+template<typename T>
+inline void BinaryTree<T>::Delete()
+{
+	if (this->left != nullptr) {
+
+	}
+	else {
+
+	}
+}
 
 template<typename T>
 bool BinaryTree<T>::AddNewItem(int key, T newItem)
