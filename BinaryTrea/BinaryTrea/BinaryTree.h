@@ -26,7 +26,7 @@ class BinaryTree
 public:
 	friend ostream operator << (ostream os,BinaryTree<T> item);
 	void Clear();
-	static void See(BinaryTree<T>* temp, int level = 0);
+	void See(BinaryTree<T>* temp, int level = 0);
 	void See(int level = 0);
 	bool Push(int key, T newItem);
 	bool Push(BinaryTree<T>* newItem);
@@ -39,7 +39,7 @@ public:
 template <typename T>
 ostream operator<<(ostream os, BinaryTree<T> item)
 {
-	BinaryTree<T>::PrintTree(item);
+	BinaryTree<T>::See(item);
 }
 template<typename T>
 void BinaryTree<T>::See(int level)
@@ -52,16 +52,18 @@ void BinaryTree<T>::See(int level)
 		if (this->right != nullptr) { temp = this->right; temp->See(level + 1); }
 	}
 }
+
 template<typename T>
-static void BinaryTree<T>::See(BinaryTree<T>* temp, int level)
+void BinaryTree<T>::See(BinaryTree<T>* temp, int level)
 {
 	if (temp)
 	{
-		PrintTree(temp->left, level + 1);
+		See(temp->left, level + 1);
 		for (int i = 0; i< level; i++) cout << "	"; cout << temp->_key << endl;
-		PrintTree(temp->right, level + 1);
+		See(temp->right, level + 1);
 	}
 }
+
 template<typename T>
 void BinaryTree<T>::Clear()
 {
@@ -69,6 +71,7 @@ void BinaryTree<T>::Clear()
 	CleanLeft(temp);
 	CleanRight(temp);
 }
+
 template<typename T>
 void BinaryTree<T>::CleanRight(BinaryTree<T>* temp)
 {
@@ -79,6 +82,7 @@ void BinaryTree<T>::CleanRight(BinaryTree<T>* temp)
 		this->right = nullptr;
 	}
 }
+
 template<typename T>
 void BinaryTree<T>::CleanLeft(BinaryTree<T>* temp)
 {
@@ -89,11 +93,13 @@ void BinaryTree<T>::CleanLeft(BinaryTree<T>* temp)
 		this->left = nullptr;
 	}
 }
+
 template<typename T>
 BinaryTree<T>::~BinaryTree()
 {
 	this->Clear();
 }
+
 template<typename T>
 BinaryTree<T>* BinaryTree<T>::GoRight(BinaryTree<T>* temp)
 {
@@ -110,6 +116,7 @@ BinaryTree<T>* BinaryTree<T>::GoLeft(BinaryTree<T>* temp)
 	else
 		return temp;
 }
+
 template<typename T>
 bool BinaryTree<T>::DellThisShit()
 {
@@ -131,26 +138,31 @@ bool BinaryTree<T>::DellThisShit()
 		return res;
 	}
 }
+
 template<typename T>
 inline bool BinaryTree<T>::AddRight(int key, T newItem)
 {
 	return((this->right = new BinaryTree<T>(key, newItem, this)) != nullptr) ? true : false;
 }
+
 template<typename T>
 inline bool BinaryTree<T>::AddRight(BinaryTree<T> * newItem)
 {
 	return((this->right = newItem)!= nullptr) ? true : false;
 }
+
 template<typename T>
 inline bool BinaryTree<T>::AddLeft(int key, T newItem)
 {
 	return((this->left = new BinaryTree<T>(key, newItem, this)) != nullptr) ? true : false;
 }
+
 template<typename T>
 inline bool BinaryTree<T>::AddLeft(BinaryTree<T>* newItem)
 {
 	return((this->left = newItem) != nullptr) ? true : false;
 }
+
 template<typename T>
 bool BinaryTree<T>::Add(int key, T newItem)
 {
@@ -159,6 +171,7 @@ bool BinaryTree<T>::Add(int key, T newItem)
 	else
 		return BinaryTree::AddLeft(key, newItem);
 }
+
 template<typename T>
 bool BinaryTree<T>::Add( BinaryTree<T>* newItem)
 {
@@ -167,6 +180,7 @@ bool BinaryTree<T>::Add( BinaryTree<T>* newItem)
 	else
 		return BinaryTree::AddLeft(newItem);
 }
+
 template<typename T>
 bool BinaryTree<T>::Push(int key, T newItem)
 {
@@ -175,6 +189,7 @@ bool BinaryTree<T>::Push(int key, T newItem)
 	if (temp == this) return this->Add(key, newItem);
 	else return temp->Push(key, newItem);
 }
+
 template<typename T>
 bool BinaryTree<T>::Push(BinaryTree<T>* newItem)
 {
@@ -183,6 +198,7 @@ bool BinaryTree<T>::Push(BinaryTree<T>* newItem)
 	if (temp == this) return this->Add(newItem);
 	else return temp->Push(newItem);
 }
+
 template<typename T>
 bool BinaryTree<T>::Pop(int key)
 {
