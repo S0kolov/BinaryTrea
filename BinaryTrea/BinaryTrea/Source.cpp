@@ -67,7 +67,7 @@ void Menu(BinaryTree<T>* root)
 		case 1: root->Push(AddRouteKeyAndValue<T>()); break;
 		case 2: DeleteItem(root); break;
 		case 3: root->See(); system("pause"); break;
-		case 4: break;
+		case 4: cout << "enter key: " << endl; cin >> number; root->seach(number)->SeeThis(); system("pause"); break;
 		case 0: flag = false; break;
 		default: continue;
 		}

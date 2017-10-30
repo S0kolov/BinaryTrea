@@ -22,8 +22,10 @@ class BinaryTree
 	void CleanLeft(BinaryTree<T> * temp);
 	static BinaryTree<T>* GoRight(BinaryTree<T>* temp);
 	static BinaryTree<T>* GoLeft(BinaryTree<T>* temp);
-	bool DellThisShit();
+	bool DellThis();
 public:
+	void SeeThis();
+	BinaryTree<T>* seach(int key);
 	friend ostream operator << (ostream os,BinaryTree<T> item);
 	void Clear();
 	void See(BinaryTree<T>* temp, int level = 0);
@@ -48,7 +50,7 @@ void BinaryTree<T>::See(int level)
 	if (this)
 	{
 		if (this->left != nullptr) { temp = this->left; temp->See(level + 1); }
-		for (int i = 0; i< level; i++) cout << "	"; cout << this->_key << endl;
+		for (int i = 0; i< level; i++) cout << "	"; cout << this->_key <<"("<< this->_item<<")"<< endl;
 		if (this->right != nullptr) { temp = this->right; temp->See(level + 1); }
 	}
 }
@@ -59,7 +61,7 @@ void BinaryTree<T>::See(BinaryTree<T>* temp, int level)
 	if (temp)
 	{
 		See(temp->left, level + 1);
-		for (int i = 0; i< level; i++) cout << "	"; cout << temp->_key << endl;
+		for (int i = 0; i< level; i++) cout << "	"; cout << temp->_key << "(" << this->_item << ")" << endl;
 		See(temp->right, level + 1);
 	}
 }
@@ -118,7 +120,7 @@ BinaryTree<T>* BinaryTree<T>::GoLeft(BinaryTree<T>* temp)
 }
 
 template<typename T>
-bool BinaryTree<T>::DellThisShit()
+bool BinaryTree<T>::DellThis()
 {
 	if (this->left == nullptr)
 	{
@@ -137,6 +139,21 @@ bool BinaryTree<T>::DellThisShit()
 		this->parent->right = (this->parent->right == this) ? this->left : this->parent->right;
 		return res;
 	}
+}
+
+template<typename T>
+void BinaryTree<T>::SeeThis()
+{
+	cout << this->_key << "(" << this->_item << ")" << endl;
+}
+
+template<typename T>
+inline BinaryTree<T>* BinaryTree<T>::seach(int key)
+{
+	BinaryTree<T>* temp = nullptr;
+	temp = (key >= this->_key) ? GoRight(this) : GoLeft(this);
+	if (temp->_key == key) return temp;
+	else return temp->seach(key);
 }
 
 template<typename T>
@@ -205,7 +222,7 @@ bool BinaryTree<T>::Pop(int key)
 	BinaryTree<T>* temp = nullptr;
 	if( this->_key == key)
 	{
-		bool res = this->DellThisShit();
+		bool res = this->DellThis();
 		if (res)
 			temp = nullptr;
 		return res;
