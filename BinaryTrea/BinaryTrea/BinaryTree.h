@@ -1,11 +1,14 @@
 #pragma once
 #include <iostream>
+#include "AllClocks.h"
+
 
 using namespace std;
 
 template <typename T>
 class BinaryTree
-{
+{	
+	
 	int _key;
 	T _item;
 	BinaryTree* left;
@@ -24,6 +27,7 @@ class BinaryTree
 	static BinaryTree<T>* GoLeft(BinaryTree<T>* temp);
 	bool DellThis();
 public:
+	void SeeAllItems(int level=0);
 	void SeeThis();
 	BinaryTree<T>* seach(int key);
 	friend ostream operator << (ostream os,BinaryTree<T> item);
@@ -35,7 +39,6 @@ public:
 	bool Pop(int key);
 	BinaryTree(int key, T newItem =NULL, BinaryTree<T>* pa=nullptr);
 	~BinaryTree();
-
 };
 
 template <typename T>
@@ -142,6 +145,18 @@ bool BinaryTree<T>::DellThis()
 }
 
 template<typename T>
+inline void BinaryTree<T>::SeeAllItems(int level)
+{
+	BinaryTree<T>* temp = nullptr;
+	if (this)
+	{
+		if (this->left != nullptr) { temp = this->left; temp->SeeAllItems(level + 1); }
+			cout<< this->_item << endl;
+		if (this->right != nullptr) { temp = this->right; temp->SeeAllItems(level + 1); }
+	}
+}
+
+template<typename T>
 void BinaryTree<T>::SeeThis()
 {
 	cout << this->_key << "(" << this->_item << ")" << endl;
@@ -165,6 +180,7 @@ inline bool BinaryTree<T>::AddRight(int key, T newItem)
 template<typename T>
 inline bool BinaryTree<T>::AddRight(BinaryTree<T> * newItem)
 {
+	newItem->parent = this;
 	return((this->right = newItem)!= nullptr) ? true : false;
 }
 
@@ -177,6 +193,7 @@ inline bool BinaryTree<T>::AddLeft(int key, T newItem)
 template<typename T>
 inline bool BinaryTree<T>::AddLeft(BinaryTree<T>* newItem)
 {
+	newItem->parent = this;
 	return((this->left = newItem) != nullptr) ? true : false;
 }
 
@@ -219,9 +236,14 @@ bool BinaryTree<T>::Push(BinaryTree<T>* newItem)
 template<typename T>
 bool BinaryTree<T>::Pop(int key)
 {
+	
 	BinaryTree<T>* temp = nullptr;
 	if( this->_key == key)
 	{
+		if (this->parent == NULL) {
+			cout << "We can`t delete root" << endl;
+			return true;
+		}
 		bool res = this->DellThis();
 		if (res)
 			temp = nullptr;
