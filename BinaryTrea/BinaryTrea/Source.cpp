@@ -37,6 +37,19 @@ void main(){
 		case 3: 
 			root = AddRouteKeyAndValue<Clock>();
 			Menu(static_cast<BinaryTree<Clock>*>(root));
+			break;
+		case 4:
+			root = AddRouteKeyAndValue<MechClock>();
+			Menu(static_cast<BinaryTree<MechClock>*>(root));
+			break;
+		case 5:
+			root = AddRouteKeyAndValue<TableMechClock>();
+			Menu(static_cast<BinaryTree<TableMechClock>*>(root));
+			break;
+		case 6:
+			root = AddRouteKeyAndValue<WristWatch>();
+			Menu(static_cast<BinaryTree<WristWatch>*>(root));
+			break;
 		case 0: flag_1 = false;
 		default: break;
 		}
@@ -50,6 +63,9 @@ void PrintTypesOfElements()
 	cout << "1) int" << endl;
 	cout << "2) double" << endl;
 	cout << "3) Clock" << endl;
+	cout << "4) Mech clock" << endl;
+	cout << "5) Table mech clock" << endl;
+	cout << "6) Wrist watch" << endl;
 	cout << "0) exit" << endl;
 }
 
@@ -58,8 +74,9 @@ void PrintMenu()
 	cout << "1) Add Element in tree" << endl;
 	cout << "2) Delete Element from tree" << endl;
 	cout << "3) See tree" << endl;
-	cout << "4) Find element" << endl;
-	cout << "5) See items" << endl;
+	cout << "4) See items" << endl;
+	cout << "5) Find element" << endl;
+	cout << "6) Delete and return" << endl;
 	cout << "0) Exit from programm" << endl;
 }
 
@@ -75,10 +92,11 @@ void Menu(BinaryTree<T>* root)
 		switch (number)
 		{
 		case 1: root->Push(AddRouteKeyAndValue<T>()); break;
-		case 2: DeleteItem(root); break;
+		case 2: DeleteItem(root,false); break;
 		case 3: root->See(); system("pause"); break;
-		case 4: cout << "enter key: " << endl; cin >> number; root->seach(number)->SeeThis(); system("pause"); break;
-		case 5:  root->SeeAllItems(); system("pause"); break;
+		case 5: cout << "enter key: " << endl; cin >> number; root->seach(number)->SeeThis(); system("pause"); break;
+		case 4:  root->SeeAllItems(); system("pause"); break;
+		case 6:DeleteItem(root, true); break;
 		case 0: flag = false; break;
 		default: continue;
 		}
@@ -86,13 +104,19 @@ void Menu(BinaryTree<T>* root)
 }
 
 template<typename T>
-void DeleteItem(BinaryTree<T>* root)
+void DeleteItem(BinaryTree<T>* root,bool flag)
 {
 	int key;
 	cout << "print key of delete item" << endl;
 	cin >> key;
-	if (!root->Pop(key)) {
-		cout << "item with this key not found" << endl;
+	if (!flag) {
+		if (!root->Pop(key)) {
+			cout << "item with this key not found" << endl;
+			system("pause");
+		}
+	}
+	else {
+		cout << root->GetItem(*(root->Pop(key, true)))<<endl;
 		system("pause");
 	}
 }

@@ -27,25 +27,31 @@ class BinaryTree
 	static BinaryTree<T>* GoLeft(BinaryTree<T>* temp);
 	bool DellThis();
 public:
+	T GetItem(BinaryTree<T>& item);
 	void SeeAllItems(int level=0);
 	void SeeThis();
 	BinaryTree<T>* seach(int key);
-	friend ostream operator << (ostream os,BinaryTree<T> item);
 	void Clear();
 	void See(BinaryTree<T>* temp, int level = 0);
 	void See(int level = 0);
 	bool Push(int key, T newItem);
 	bool Push(BinaryTree<T>* newItem);
+	BinaryTree<T>* Pop(int key,bool flag);
 	bool Pop(int key);
+	friend ostream& operator<<(ostream& os, BinaryTree<T>& item);
 	BinaryTree(int key, T newItem =NULL, BinaryTree<T>* pa=nullptr);
 	~BinaryTree();
 };
 
-template <typename T>
-ostream operator<<(ostream os, BinaryTree<T> item)
+
+
+template<typename T>
+ostream & operator<<(ostream & os, BinaryTree<T>& item)
 {
-	BinaryTree<T>::See(item);
+	os << item->_item;
+	return os;
 }
+
 template<typename T>
 void BinaryTree<T>::See(int level)
 {
@@ -113,6 +119,7 @@ BinaryTree<T>* BinaryTree<T>::GoRight(BinaryTree<T>* temp)
 	else
 		return temp;
 }
+
 template<typename T>
 BinaryTree<T>* BinaryTree<T>::GoLeft(BinaryTree<T>* temp)
 {
@@ -142,6 +149,12 @@ bool BinaryTree<T>::DellThis()
 		this->parent->right = (this->parent->right == this) ? this->left : this->parent->right;
 		return res;
 	}
+}
+
+template<typename T>
+inline T BinaryTree<T>::GetItem(BinaryTree<T>& item)
+{
+	return item._item;
 }
 
 template<typename T>
@@ -231,6 +244,27 @@ bool BinaryTree<T>::Push(BinaryTree<T>* newItem)
 	temp = (newItem->_key >= this->_key) ? GoRight(this) : GoLeft(this);
 	if (temp == this) return this->Add(newItem);
 	else return temp->Push(newItem);
+}
+
+template<typename T>
+inline BinaryTree<T>* BinaryTree<T>::Pop(int key, bool flag)
+{
+	BinaryTree<T>* temp = nullptr;
+	if (this->_key == key)
+	{
+		if (this->parent == NULL) {
+			cout << "We can`t delete root" << endl;
+			return this;
+		}
+		bool res = this->DellThis();
+		return this;
+	}
+	else
+	{
+		temp = (key >= this->_key) ? GoRight(this) : GoLeft(this);
+		if (temp == this) return NULL;
+		else return temp->Pop(key,true);
+	}
 }
 
 template<typename T>

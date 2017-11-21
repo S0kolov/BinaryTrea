@@ -15,10 +15,8 @@ public:
 	friend istream& operator>>(istream& is, MechClock& temp) {
 		MechClock* obj = &temp;
 		is>>*dynamic_cast<Clock*>(obj);
-		//int c;
 		cout << "enter charge value(0-100):\n";
 		rewind(stdin);
-		//is >> c;
 		temp._charge = Validation::VvodChisla(0, 100);
 		return is;
 	}
