@@ -1,7 +1,5 @@
 #include "BinaryTree.cpp"
 
-
-
 void PrintTypesOfElements();
 template<typename T>
 BinaryTree<T>* AddRouteKeyAndValue();
@@ -9,10 +7,7 @@ void PrintMenu();
 template<typename T>
 void Menu(BinaryTree<T>* root);
 template<typename T>
-void DeleteItem(BinaryTree<T>* root);
-
-
-
+void DeleteItem(BinaryTree<T>* root,bool flag);
 
 void main(){
 	bool flag_1 = true;
@@ -92,7 +87,7 @@ void Menu(BinaryTree<T>* root)
 		switch (number)
 		{
 		case 1: root->Push(AddRouteKeyAndValue<T>()); break;
-		case 2: DeleteItem(root,false); break;
+		case 2: delete DeleteItem(root,true); break;
 		case 3: root->See(); system("pause"); break;
 		case 5: cout << "enter key: " << endl; cin >> number; root->seach(number)->SeeThis(); system("pause"); break;
 		case 4:  root->SeeAllItems(); system("pause"); break;
@@ -132,5 +127,3 @@ BinaryTree<T>* AddRouteKeyAndValue()
 	cin >> value;
 	return new BinaryTree<T>(key, value);
 }
-
-
