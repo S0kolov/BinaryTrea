@@ -1,4 +1,5 @@
 #include "Tree.h"
+#include "AllClocks.h"
 
 void PrintTypesOfElements();
 template<typename T>
@@ -18,16 +19,27 @@ void main() {
 		PrintTypesOfElements();
 		int k = 0;
 		cin >> k;
+		void* tree;
 		switch (k)
 		{
 		case 1:
-			Tree<int>* root =new Tree<int>(AddRouteKeyAndValue<int>());
-			Menu(root);
-			break;
+			tree = new Tree<int>(AddRouteKeyAndValue<int>());
+			Menu(static_cast<Tree<int>*>(tree)); delete tree; break;
 		case 2:
-			Tree<char>* root = new Tree<char>(AddRouteKeyAndValue<char>());
-			Menu(root);
-			break;
+			tree = new Tree<double>(AddRouteKeyAndValue<double>());
+			Menu(static_cast<Tree<double>*>(tree)); delete tree; break;
+		case 3:
+			tree = new Tree<Clock>(AddRouteKeyAndValue<Clock>());
+			Menu(static_cast<Tree<Clock>*>(tree)); delete tree; break;
+		case 4:
+			tree = new Tree<MechClock>(AddRouteKeyAndValue<MechClock>());
+			Menu(static_cast<Tree<MechClock>*>(tree)); delete tree; break;
+		case 5:
+			tree = new Tree<TableMechClock>(AddRouteKeyAndValue<TableMechClock>());
+			Menu(static_cast<Tree<TableMechClock>*>(tree)); delete tree; break;
+		case 6:
+			tree = new Tree<WristWatch>(AddRouteKeyAndValue<WristWatch>());
+			Menu(static_cast<Tree<WristWatch>*>(tree)); delete tree; break;
 		case 0: flag_1 = false;
 		default: break;
 		}
@@ -56,7 +68,7 @@ void PrintMenu()
 }
 
 template<typename T>
-void Menu(Tree<T>* root)
+void Menu(Tree<T>* tree)
 {
 	bool flag = true;
 	do {
@@ -66,10 +78,10 @@ void Menu(Tree<T>* root)
 		cin >> number;
 		switch (number)
 		{
-		case 1: root->Push(AddRouteKeyAndValue<T>()); break;
-		case 2: DeleteItem(root); break;
-		case 3: root->See(root->root); system("pause"); break;
-		case 4: root->SeeAllItems(root->root); system("pause"); break;
+		case 1: tree->Push(AddRouteKeyAndValue<T>()); break;
+		case 2: DeleteItem(tree); break;
+		case 3: tree->See(tree->root); system("pause"); break;
+		case 4: tree->SeeAllItem(tree->root); system("pause"); break;
 		case 0: flag = false; break;
 		default: continue;
 		}
@@ -77,12 +89,12 @@ void Menu(Tree<T>* root)
 }
 
 template<typename T>
-void DeleteItem(Tree<T>* root)
+void DeleteItem(Tree<T>* tree)
 {
 	int key;
 	cout << "print key of delete item" << endl;
 	cin >> key;
-	root->Pop(key);
+	tree->Pop(key);
 	system("pause");
 }
 

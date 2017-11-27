@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Clocks">
+      <UniqueIdentifier>{30f88c84-6e47-470d-b32b-30858855ff7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tree.h">
@@ -21,16 +24,64 @@
     <ClInclude Include="TreeNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AllClocks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\Clock.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\CustomException.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\El_Clocks.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\ElectronicTableClocks.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\ElTableAlarm.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\InvalidArgumentsException.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\MechClock.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\TableMechClock.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\Validation.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock\WristWatch.h">
+      <Filter>Clocks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Tree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TreeNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock\Clock.cpp">
+      <Filter>Clocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock\El_Clocks.cpp">
+      <Filter>Clocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock\ElectronicTableClocks.cpp">
+      <Filter>Clocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock\ElTableAlarm.cpp">
+      <Filter>Clocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock\MechClock.cpp">
+      <Filter>Clocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock\TableMechClock.cpp">
+      <Filter>Clocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock\WristWatch.cpp">
+      <Filter>Clocks</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

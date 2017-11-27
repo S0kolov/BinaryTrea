@@ -19,7 +19,7 @@ public:
 		return ansver;
 	}
 
-	TreeNode<T> GetItem() {
+	T GetItem() {
 		return _item;
 	}
 	friend bool operator>(TreeNode<T> &first, TreeNode<T> &second) {

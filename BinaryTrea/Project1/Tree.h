@@ -136,6 +136,17 @@ void Tree<T>::Pop(int key)
 }
 
 template<typename T>
+void Tree<T>::SeeAllItem(TreeNode<T>* temp)
+{
+	if (temp)
+	{
+		SeeAllItem(temp->left);
+		cout << temp->_key << "(" << temp->_item << ")" << endl;
+		SeeAllItem(temp->right);
+	}
+}
+
+template<typename T>
 void Tree<T>::See(TreeNode<T>* temp,int level)
 {
 	if (temp)
@@ -148,13 +159,4 @@ void Tree<T>::See(TreeNode<T>* temp,int level)
 	}
 }
 
-template<typename T>
-inline void Tree<T>::SeeAllItem(TreeNode<T>* temp)
-{
-	if (temp)
-	{
-		SeeAllItem(temp->left);
-		cout << temp->_key << "(" << temp->_item << ")" << endl;
-		SeeAllItem(temp->right);
-	}
-}
+
