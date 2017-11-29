@@ -23,6 +23,30 @@ public:
 		this->element = this->root = pr;
 	}
 	~Tree();
+
+	TreeNode<T>* GetBegin();
+	TreeNode<T>* GetEnd();
+
+	class Iterator {
+		TreeNode* iter;
+
+		Iterator(TreeNode* iter)
+		{
+			this->iter = iter;
+		}
+		void operator++() {
+
+		}
+		void operator--() {
+
+		}
+		T& operator*() {
+			return iter->_item;
+		}
+		TreeNode& operator&() {
+
+		}
+	};
 };
 
 template<typename T>
@@ -37,6 +61,26 @@ inline Tree<T>::~Tree()
 	Clean(root);
 	delete root;
 	this->root=this->element = nullptr;
+}
+
+template<typename T>
+inline TreeNode<T>* Tree<T>::GetBegin()
+{
+	TreeNode<T>* temp = this->element;
+	while (temp->left != nullptr) {
+		temp = temp->left;
+	}
+	return temp;
+}
+
+template<typename T>
+inline TreeNode<T>* Tree<T>::GetEnd()
+{
+	TreeNode<T>* temp = this->element;
+	while (temp->right != nullptr) {
+		temp = temp->right;
+	}
+	return temp;
 }
 
 template<typename T>
@@ -89,19 +133,27 @@ void Tree<T>::Pop(int key)
 	TreeNode<T>* temp = nullptr;
 	if (this->element->_key == key)
 	{
-		if (this->element == this->root) {
+		if (this->element == this->root)
+		{
 			cout << "We can`t delete root" << endl;
 			return;
 		}
 		if (this->element->left == nullptr)
-		{
+		{	
+			if (this->element->right != nullptr)
+				this->element->right->parent = this->element->parent;
 			this->element->parent->left = (this->element->parent->left == this->element) ? this->element->right : this->element->parent->left;
 			this->element->parent->right = (this->element->parent->right == this->element) ? this->element->right : this->element->parent->right;
+			delete this->element;
 			return;
 		}
-		else if (this->element->right == nullptr) {
+		else if (this->element->right == nullptr)
+		{
+			if (this->element->left != nullptr)
+				this->element->left->parent = this->element->parent;
 			this->element->parent->left = (this->element->parent->left == this->element) ? this->element->left : this->element->parent->left;
 			this->element->parent->right = (this->element->parent->right == this->element) ? this->element->left : this->element->parent->right;
+			delete this->element;
 			return;
 		}
 		else {
@@ -111,8 +163,11 @@ void Tree<T>::Pop(int key)
 			Push(e->right);
 			this->root = r;
 			this->element = e;
+			e->left->parent = e->parent;
+			this->element->right = this->element->parent;
 			this->element->parent->left = (this->element->parent->left == this->element) ? this->element->left : this->element->parent->left;
 			this->element->parent->right = (this->element->parent->right == this->element) ? this->element->left : this->element->parent->right;
+			delete this->element;
 			return;
 		}
 	}
@@ -125,11 +180,14 @@ void Tree<T>::Pop(int key)
 			temp = this->element->left;
 		}
 		if (temp == nullptr) {
+			this->element = this->root;
 			return;
 		}
 		else {
 			this->element = temp;
-			return Pop(key);
+			Pop(key);
+			this->element = this->root;
+			return;
 		}
 		this->element = this->root;
 	}
@@ -141,7 +199,7 @@ void Tree<T>::SeeAllItem(TreeNode<T>* temp)
 	if (temp)
 	{
 		SeeAllItem(temp->left);
-		cout << temp->_key << "(" << temp->_item << ")" << endl;
+		cout << temp->_key << "|" << temp->_item << "|" << endl;
 		SeeAllItem(temp->right);
 	}
 }
@@ -154,7 +212,7 @@ void Tree<T>::See(TreeNode<T>* temp,int level)
 		See(temp->left, level + 1);
 		for (int i = 0; i< level; i++)
 			cout << "	"; 
-		cout << temp->_key << "(" << temp->_item << ")" << endl;
+		cout << temp->_key << "|" << temp->_item << "|" << endl;
 		See(temp->right, level + 1);
 	}
 }

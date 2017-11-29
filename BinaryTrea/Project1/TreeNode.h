@@ -6,7 +6,7 @@ public:
 	int _key;
 	T _item;
 	TreeNode<T> *left, *right, *parent;
-public:
+
 	void SetParent(TreeNode<T>* pr) {
 		this->parent = pr;
 	}
@@ -22,6 +22,7 @@ public:
 	T GetItem() {
 		return _item;
 	}
+
 	friend bool operator>(TreeNode<T> &first, TreeNode<T> &second) {
 		bool result;
 		switch (first.CompareKey(second))
@@ -40,6 +41,7 @@ public:
 		}
 		return result;
 	}
+
 	TreeNode(int key, T item,TreeNode<T>* pr=nullptr) {
 		this->_key = key;
 		this->_item = item;
