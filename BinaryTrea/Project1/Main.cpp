@@ -1,5 +1,6 @@
 #include "Tree.h"
 #include "AllClocks.h"
+#include "Algoritm.h"
 
 void PrintTypesOfElements();
 template<typename T>
@@ -9,6 +10,10 @@ template<typename T>
 void Menu(Tree<T>* root);
 template<typename T>
 void DeleteItem(Tree<T>* root);
+template<typename T>
+void Next(Tree<T>* tree,typename Tree<T>::MyIterator& iter);
+template<typename T>
+void Previous(Tree<T>* tree, typename Tree<T>::MyIterator& iter);
 
 void main() {
 	bool flag_1 = true;
@@ -24,7 +29,7 @@ void main() {
 		{
 		case 1:
 			tree = new Tree<int>(AddRouteKeyAndValue<int>());
-			Menu(static_cast<Tree<int>*>(tree)); delete tree; break;
+ 			Menu(static_cast<Tree<int>*>(tree)); delete tree; break;
 		case 2:
 			tree = new Tree<double>(AddRouteKeyAndValue<double>());
 			Menu(static_cast<Tree<double>*>(tree)); delete tree; break;
@@ -64,13 +69,16 @@ void PrintMenu()
 	cout << "2) Delete Element from tree" << endl;
 	cout << "3) See tree" << endl;
 	cout << "4) See items" << endl;
+	cout << "5) Next element" << endl;
+	cout << "6) Previous element" << endl;
+	cout << "7) Find by key" << endl;
 	cout << "0) Exit from programm" << endl;
 }
 
 template<typename T>
 void Menu(Tree<T>* tree)
 {
-	bool flag = true;
+	bool flag = true;	
 	do {
 		system("cls");
 		PrintMenu();
@@ -82,6 +90,9 @@ void Menu(Tree<T>* tree)
 		case 2: DeleteItem(tree); break;
 		case 3: tree->See(tree->root); system("pause"); break;
 		case 4: tree->SeeAllItem(tree->root); system("pause"); break;
+		case 5: {Tree<T>::MyIterator begin(tree->GetBegin()); Next(tree, begin); break; }
+		case 6: {Tree<T>::MyIterator end(tree->GetEnd()); Previous(tree, end); break; }
+		case 7: Find(tree); break;
 		case 0: flag = false; break;
 		default: continue;
 		}
@@ -108,4 +119,54 @@ TreeNode<T>* AddRouteKeyAndValue()
 	T value = 0;
 	cin >> value;
 	return new TreeNode<T>(key, value);
+}
+
+template<typename T>
+void Next(Tree<T>* tree, typename Tree<T>::MyIterator& iter) {
+	cout << endl << endl;
+	cout << (&iter)->_key << "(" << *iter << ")" << endl;
+	while (iter !=*(tree->GetEnd())) {
+		++iter;
+		cout << (&iter)->_key << "(" << *iter << ")" << endl;
+	}
+	system("pause");
+}
+
+template<typename T>
+void Previous(Tree<T>* tree, typename Tree<T>::MyIterator& iter) {
+	cout << endl << endl;
+	cout << (&iter)->_key << "(" << *iter << ")" << endl;
+	while (iter != *(tree->GetBegin())) {
+		--iter;
+		cout << (&iter)->_key << "(" << *iter << ")" << endl;
+	}
+	system("pause");
+}
+
+template<typename T>
+void Find(Tree<T>* tree) {
+	cout << "Enter key" << endl;
+	int ans = 0;
+	while (true) {
+		try
+		{
+			cin.clear();
+			rewind(stdin);
+			ans = Validation::VvodChisla(-1000, 1000);
+			break;
+		}
+		catch (InvalidArgumentsException e)
+		{
+			continue;
+		}
+	}	
+	TreeNode<T>* temp = Algoritm<T>::Poisk(tree, ans);
+	if (temp == nullptr) {
+		cout << "Not Found" << endl;
+		system("pause");
+		return;
+	}
+	cout << temp->_key << "   " << temp->_item << endl;
+	system("pause");
+	return;
 }

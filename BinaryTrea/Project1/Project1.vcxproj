@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Algoritm.h" />
     <ClInclude Include="AllClocks.h" />
     <ClInclude Include="Clock\Clock.h" />
     <ClInclude Include="Clock\CustomException.h" />
